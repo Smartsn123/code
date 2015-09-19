@@ -1,0 +1,54 @@
+ #include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a
+#define br cout<<endl
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define max(a,b) (a>b?a:b) 
+#define min(a,b) (a<b?a:b) 
+#define arrin(arrname,size) loop(i,0,size) cin>>arrname[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define mapiter(mymap,it) for(it=mymap.begin();it!=mymap.end();it++)
+#define MAXL 1004
+ll init[MAXL];
+ll pwd[MAXL];
+ll n;
+
+
+int main()
+{  fastinput;
+   cin>>n;
+   cin.ignore();
+   string s1,s2;
+   cin>>s1;
+   cin>>s2;
+   
+   loop(i,0,n)
+   { init[i]=s1[i]-'0';
+     pwd[i]]=s2[i]-'0';
+   }
+   ll moves=0;
+   loop(i,0,n)
+   { 
+     ll distc=0,dista=0;
+     if(init[i]<pwd[i])
+      { distc=9-pwd[i]+init[i]+1;
+        dista=pwd[i]-init[i];
+      }
+     else if(init[i]>pwd[i])
+       { distc=init[i]-pwd[i];
+        dista=9-init[i]+pwd[i]+1;
+       }
+     moves+=min(dista,distc);
+    }  
+  
+
+  cout<<moves<<endl;
+
+
+  return 0;
+   
+}
+

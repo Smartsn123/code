@@ -1,0 +1,90 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a;
+#define br cout<<endl
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define max(a,b) ( a>b ? a : b )
+#define min(a,b) ( a>b ? b : a )
+#define arrin(arrname,size) loop(i,0,size) cin>>arrname[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define mapiter(mymap,it) for(it=mymap.begin();it!=mymap.end();it++)
+#define MAXL 1000005
+ll arr[MAXL];
+ll l[MAXL];
+ll r[MAXL];
+ll val[MAXL];
+ll fq[MAXL];
+
+void  maketre(ll ind,ll a,ll b)
+{ 
+  
+  l[ind]=a;
+  r[ind]=b;
+  ll mid=a+((b-a)/2);
+ 
+  if(a==b)
+   { val[ind]=arr[a]; fq[ind]=1; return;}
+  
+  maketre(2*ind+1,a,mid);
+  maketre(2*ind+2,mid+1,b);
+  if(val[2*ind+1]==val[2*ind+2])
+  { val[ind]=val[2*ind+1]; fq[ind]=fq[2*ind+1]+fq[2*ind+2];}
+  else if(val[2*ind+1]>val[2*ind+2])
+   { val[ind]=val[2*ind+1]; fq[ind]=fq[2*ind+1];}
+  else if(val[2*ind+1]<val[2*ind+2])
+   { val[ind]=val[2*ind+2]; fq[ind]=fq[2*ind+2];}
+ 
+}
+ 
+void query(ll sl,ll sr,ll ind,ll res[2])
+{
+  int a=l[ind];
+  int b=r[ind];
+  
+  if(a >sr || b<sl)
+  { res[0]=-1; res[1]=0; return  ;}
+  if(a>=sl && b<=sr)
+   { res[0]=val[ind];
+     res[1]=fq[ind];
+     return;
+   }
+  
+   ll arr1 [2]; ll arr2[2];
+   query(sl,sr,2*ind+1,arr1);
+   query(sl,sr,2*ind+2,arr2);
+   if(arr1[0]==arr2[0])
+   {res[0]=arr1[0]; res[1]=arr1[1]+arr2[1];}
+   else if(arr1[0]>arr2[0])
+   {res[0]=arr1[0]; res[1]=arr1[1];}
+   else if(arr1[0]<arr2[0])
+   {res[0]=arr2[0]; res[1]=arr2[1];}
+   
+}
+
+
+ll n,m,x,y;
+int main()
+{fastinput;
+   cin>>n>>m;
+
+   loop(i,0,n)
+      cin>>arr[i];
+   maketre(0,0,n-1);
+   //loop(i,0,2*n)
+  //  cout<<i<<"->"<<val[i]<<";"<<fq[i]<<endl;
+   loop(i,0,m)
+    {  cin>>x>>y;
+       ll res[2];
+       query(x-1,y-1,0,res);
+       cout<<res[1]<<endl;
+    }
+     
+     
+    
+  
+  return 0;
+}
+

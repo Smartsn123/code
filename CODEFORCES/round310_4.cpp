@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a;
+#define br printf("\n")
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define arrin(arrname,size) loop(i,0,size) cin>>arr[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define  LEN 1000006
+
+ll l[LEN];
+ll r[LEN];
+ll maxl[LEN];
+ll minl[LEN];
+ll n;
+
+
+int main()
+{
+   cin>>n;
+   loop(i,0,n)
+    cin>>l[i]>>r[i];
+    
+
+   loop(i,0,n-1)
+   {
+      maxl[i]=r[i+1]-l[i]+1;
+      minl[i]=l[i+1]-r[i]+1;       
+   }
+
+
+   
+}

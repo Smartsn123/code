@@ -1,0 +1,28 @@
+n=raw_input()
+n=int(n)
+t=2**n -1
+dcw={}
+while(t):
+  w,l=raw_input().split()
+  if w not in dcw.keys():
+   dcw[w]=1
+  else :
+   dcw[w]+=1
+ 
+  if l not in dcw.keys():
+   dcw[l]=-1
+  else :
+   dcw[l]-=1
+  t-=1
+
+#print dcw
+maxm=-1000000000
+max_i='c'
+for key,value in dcw.iteritems():
+     if value>maxm:
+         maxm=value
+         max_i=key
+
+print max_i
+  
+

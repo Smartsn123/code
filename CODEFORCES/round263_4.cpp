@@ -1,0 +1,68 @@
+//Written by Sunny Singh IPG_2012086 ABV-IIITM Gwalior 
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a
+#define br cout<<endl
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define max(a,b) (a>b?a:b) 
+#define min(a,b) (a<b?a:b) 
+#define arrin(arrname,size) loop(i,0,size) cin>>arrname[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define mapiter(mymap,it) for(it=mymap.begin();it!=mymap.end();it++)
+#define mod 1000000007
+#define MAXL 1000006
+ll n,v;
+bool x[MAXL];
+bool col[MAXL];
+vector<ll> adj[MAXL];
+ll dp[MAXL][2];
+
+void DFS(ll ind)
+{
+   dp[ind][1]=0;
+   dp[ind][0]=1;
+   col[ind]=1;
+   loop(i,0,adj[ind].size())
+   {
+      if(col[ind]==0)
+       {   ll u=adj[ind][i];
+           DFS(u);
+           dp[ind][1]=(dp[ind][1]*dp[u][0])%mod;
+           dp[ind][1]+=(dp[ind][0]*dp[u][1])%mod;
+           dp[ind][1]%=mod;
+           dp[ind][0]=(dp[ind][0]*dp[u][0])%mod;
+       }
+   }
+
+  if(x[ind]==1)
+   dp[ind][1]=dp[v][0];
+  else
+   dp[ind][0]=(dp[ind][0]+dp[ind][1])%mod;
+}
+
+
+
+
+int main()
+{ fastinput;
+  cin>>n;
+
+  
+  loop(i,0,n)
+  {  cin>>v;
+     adj[i+1].push_back(v);
+     adj[v].push_back(i+1);
+  }
+  
+  loop(i,0,n)
+    cin>>x[i];
+
+  DFS(0);
+  cout<<dp[0][1]<<endl; 
+  
+  
+  return 0;  
+}

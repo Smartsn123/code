@@ -1,0 +1,149 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a
+#define br printf("\n")
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define arrin(arrname,size) loop(i,0,size) cin>>arr[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define LT 10000001
+
+bool isprime[LT];
+ll primes[LT];
+ll size;
+
+pair<ll, pair<ll, ll> > extendedEuclid(int a, int b) {
+    ll x = 1, y = 0;
+    ll xLast = 0, yLast = 1;
+    ll q, r, m, n;
+    while(a != 0) {
+        q = b / a;
+        r = b % a;
+        m = xLast - q * x;
+        n = yLast - q * y;
+        xLast = x, yLast = y;
+        x = m, y = n;
+        b = a, a = r;
+    }
+    return make_pair(b, make_pair(xLast, yLast));
+}
+ 
+ll modInverse(ll a, ll m) {
+    return (extendedEuclid(a,m).second.first + m) % m;
+}
+
+ll pow(ll a, ll b, ll mod)
+{
+  ll ans=1;
+  if(b==0)
+  return 1;
+  ans=pow(a,b/2,mod);
+  ans= (ans*ans)%mod;
+  if(b%2)
+   ans=(ans*a)%mod;
+
+  return ans;
+}
+
+void seive()
+{
+    //cout<<"lll"<<endl;
+   loop(i,2,100001)
+   isprime[i]=1;
+   //cout<<"lll"<<endl;
+   for(ll i=2;i<100001;)
+   {  
+      primes[size++]=i;
+      
+     // cout<<i<<"--"<<endl;
+      for(ll j=i;(i*j)<=100001;j++)
+        isprime[j*i]=0;
+
+      i++;
+
+      while(i<100001 && isprime[i]==0 )
+      i++;
+      if(i>=100001)
+       break;
+   }
+}
+
+ll findpow(ll &a,ll b)
+{
+  ll c=0;
+  while(a%b==0 && a>=b)
+    {
+       c++;
+       a=a/b;
+     }
+   return c; 
+}
+
+
+void countprimes(ll N,ll l , ll *c)
+{
+   loop(i,0,l)
+   {
+       
+         ll j=0;ll num=N-i;
+         while(num>=primes[j] &&  j<size )
+          {  c[j]+=findpow(num,primes[j]);//no of times a prime appears due to no i is :
+             j++;                                // (no. of times i appears X no. of times p appears in prime factoziation of i  
+          }
+       
+   }
+}
+
+int main()
+{
+  fastinput;
+  seive();
+  ll t;
+  cin>>t;
+  while(t--)
+  { 
+     ll n,k,l,f,ans;
+     cin>>n>>k>>l>>f;
+   if(l<=n){
+     ll countpN[size+2];
+     ll countpD[size+2];
+     loop(i,0,size+1)
+       {countpN[i]=0;
+        countpD[i]=0;
+       }
+     countprimes(n,l,countpN);
+     countprimes(k,1,countpD);
+
+     loop(i,0,size+1)
+        countpD[i]*=l;
+       
+     loop(i,0,size+1)
+       {// if(i<10)
+         //cout<<primes[i]<<" "<<countpN[i]<<" "<<countpD[i]<<endl;
+         ll mini =min(countpN[i],countpD[i]);
+         countpN[i]-=mini;
+         countpD[i]-=mini;
+       }   
+     ll Den=1;
+     ll Num=1;
+
+     loop(i,0,size+1)
+       { Num*=pow(primes[i],countpN[i]);
+         Den*=pow(primes[i],countpD[i]);
+       }
+    // cout<<"here"<<endl;
+     Den=modInverse(Den,2003);
+     ans= Num*Den;
+
+    //cout<<Num<<"/"<<Den<<endl;
+    }
+     
+    else
+      ans=0;
+
+    cout<<ans<<endl;       
+  }
+  return 0;
+}

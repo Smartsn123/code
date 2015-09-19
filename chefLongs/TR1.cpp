@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  scanf("%lld",&a)
+#define out(a)  printf("%lld",a)
+#define br cout<<endl
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define max(a,b) ( a>b ? a : b )
+#define min(a,b) ( a>b ? b : a )
+#define arrin(arrname,size) loop(i,0,size) cin>>arrname[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define mapiter(mymap,it) for(it=mymap.begin();it!=mymap.end();it++)
+#define gc getchar_unlocked
+#define MAXL 1000006
+#define mod 1000000007
+vector<vector<ll> > adj;
+vector<ll> str;
+vector<ll> nodesct,col;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void dfs(ll ind)
+{
+   col[ind]=1;
+   nodesct[ind]=1;
+   str[ind]=1;
+   loop(i,0,adj[ind].size())
+   {  if(col[adj[ind][i]]==0)
+      {dfs(adj[ind][i]);
+
+      str[ind]+=2*(nodesct[adj[ind][i]]%mod*nodesct[ind]%mod)%mod;
+      str[ind]%=mod;
+      nodesct[ind]+=nodesct[adj[ind][i]];
+      nodesct[ind]%=mod;
+     }
+   }
+   
+   
+}
+
+ll t,n,x,y;
+int main()
+{
+  in(t);
+  while(t--)
+  {  ll ans=0;
+     in(n);
+     adj.resize(n+2);
+     str.resize(n+2);
+     nodesct.resize(n+2);
+     col.resize(n+2);
+     loop(i,0,n+2)
+     {  col[i]=0;
+        str[i]=0;
+        nodesct[i]=0;
+     }
+     loop(i,0,n-1)
+     {  in(x);in(y);
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+        
+        
+     }
+
+    dfs(1);
+    loop(i,1,n+1)
+    {//  cout<<i<<" : "<<str[i]<<endl;
+        ans+=(i*str[i])%mod;
+        ans%=mod;
+     }
+     out(ans); br;
+  }
+  return 0;
+}
+

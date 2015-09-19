@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll  long long int
+#define in(a)  cin>>a
+#define out(a)  cout<<a
+#define br cout<<endl
+#define loop(i,k,n) for(int i=k;i<n;i++)
+#define loopr(i,k,n) for(int i=k;i>=n;i--)
+#define max(a,b) ( a>b ? a : b )
+#define min(a,b) ( a>b ? b : a )
+#define arrin(arrname,size) loop(i,0,size) cin>>arrname[i]
+#define fastinput ios_base::sync_with_stdio(false)
+#define mapiter(mymap,it) for(it=mymap.begin();it!=mymap.end();it++)
+#define gc getchar_unlocked
+void scnum(ll &x)
+{
+    register int c = gc();
+    x = 0;
+    for(;(c<48 || c>57);c = gc());
+    for(;c>47 && c<58;c = gc()) {x = (x<<1) + (x<<3) + c - 48;}
+ 
+ }
+
+
+string gen_key(string st)
+{  string key="";
+  
+   ll ct[27]={0};
+   loop(i,0,27)
+     ct[i]=0;
+   loop(i,0,st.length())
+    ct[st[i]-'a']++;
+
+   loop(i,0,25)
+    { stringstream convert;
+      convert << ct[i];
+      key= key+convert.str();
+    }
+     key.append(st,0,1);
+     str.append(st,st.length()-1,1);
+     
+   cout<<key<<endl;
+   return key;
+   
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+map<string,ll> mymap;
+map<string,string> mymap1;
+
+
+int main()
+{fastinput;
+   ll t;
+   cin>>t;
+   string tmp[102];
+   loop(i,0,t)
+   {
+      cin.ignore();
+      cin>>tmp[i];
+      
+   }
+  ll count=0;
+  loop(i,0,t)
+   {
+      string key=gen_key(tmp[i]);
+    
+      mymap[key]+=1;
+      
+   }
+   
+  cout<<mymap.size()<<endl;
+  return 0;
+}
+
